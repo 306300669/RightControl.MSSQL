@@ -1,0 +1,136 @@
+﻿@model RightControl.Model.WorkLogModel
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutForm.cshtml";
+}
+
+<div class="layui-col-md12 top10">
+    <form class="layui-form layui-form-pane" id="form" action="/Admin/WorkLog/Add" method="post">
+    @*<form class="layui-form layui-form-pane">*@
+        <input type="hidden" id="Id" name="Id" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">日志标题</label>
+            <div class="layui-input-block">
+                <input type="text" id="wk_title" name="wk_title" lay-verify="wk_title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">项目</label>
+            <div class="layui-input-inline">
+                <select class="easyui-combobox" id="project_id" name="project_id" lay-verify="project_id" lay-filter="project_id" lay-vertype="tips" style="width:200px;">
+                    <option value="0">--请选择--</option>
+                    @foreach (KeyValuePair<int, string> item in ViewBag.sys_project as Dictionary<int, string>)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-inline">
+                <select class="easyui-combobox" id="department_id" name="department_id" lay-verify="department_id" lay-filter="department_id" lay-vertype="tips" style="width:200px;">
+                    <option value="0">--请选择--</option>
+                    @foreach (KeyValuePair<int, string> item in ViewBag.sys_department as Dictionary<int, string>)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">日志内容</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea layui-hide" id="wk_content" name="wk_content" lay-verify="wk_content" lay-reqtext="请输入日志内容"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">发布人</label>
+            <div class="layui-input-block">
+                <input type="text" id="UserName" name="UserName" class="layui-input" value="@ViewBag.Operator.UserName" disabled>
+                <input type="hidden" id="UserId" name="UserId" value="@ViewBag.Operator.UserId" disabled>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                @*<button type="submit" class="layui-btn" lay-submit="" lay-filter="btnAdd">立即提交</button>*@
+                <button class="layui-btn" lay-submit="" lay-filter="submitForm" id="submitForm">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script>
+    layui.use(['form', 'layedit'], function () {
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var $ = layui.$
+
+        var logId = GetQueryString("Id");
+
+        $("#Id").val(isStrNull(logId) != "" ? logId : 0);
+
+
+        form.on('select(project_id)', function (data) {
+            var project_id = data.value;
+            layer.msg(project_id);
+        });
+
+        form.on('select(department_id)', function (data) {
+            var department_id = data.value;
+            layer.msg(department_id);
+        });
+
+        var index_edit = layedit.build('wk_content', {
+            uploadImage: {
+                url: '/SysSet/Info/LayEditUploadFile/' //编辑器上传接口
+            }
+        });
+
+        form.verify({
+            wk_title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
+                }
+            },
+            project_id: function (value) {
+                if (value == "0")
+                    return '请选择项目';
+            },
+            department_id: function (value) {
+                if (value == "0")
+                    return '请选择部门';
+            }
+            , wk_content: function (value) {
+                var content = layedit.getContent(index_edit);
+                if (isStrNull(content) == "")
+                    return "请输入日志内容";
+                layedit.sync(index_edit);
+            }
+        });
+
+        //监听提交
+        //form.on('submit(btnAdd)', function (data) {
+        //    $.extend(data.field, { wk_content: layedit.getContent(index) });
+            
+        //    var index_load = layer.load();
+        //    $.post("/Admin/WorkLog/Add", data.field, function (data) {
+        //        layer.close(index_load);
+        //        var index_msg=layer.msg(data.message, {
+        //            time: 1000, end: function () {
+        //                layer.close(index_msg);
+        //            }
+        //        });
+        //    });
+        //});
+        submitForm(form, "提交成功"); //监听提交
+
+
+    });
+</script>
+
+
+

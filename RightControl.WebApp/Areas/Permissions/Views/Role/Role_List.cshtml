@@ -1,0 +1,82 @@
+﻿@model RightControl.Model.RoleModel
+@{
+    ViewBag.Title = "Role_List";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutForm.cshtml";
+}
+
+<div class="layui-col-md12 top10">
+    <form class="layui-form" id="form" onsubmit="return false;">
+        <input id="hidfRoleId" name="hidfRoleId" value="@Model.Id" type="hidden">
+        @Html.HiddenFor(x => x.CreateOn)
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名称</label>
+            <div class="layui-input-inline">
+                <input name="RoleName" value="@Model.RoleName" lay-verify="required" lay-vertype="tips" class="layui-input" type="text">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色范围</label>
+            <div class="">
+                @Html.RoleCheckBox(ViewData["All_Role_List"], ViewData["Have_Role_List"])
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submitForm" id="submitForm">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['common', 'form'], function () {
+        var common = layui.common,
+            form = layui.form;
+        var $ = layui.$;
+        //关闭页面
+        function CloseWin() {
+            parent.location.reload(); // 父页面刷新
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+        }
+        //保存设置
+        $("#submitForm").on('click', function () {
+            var _roleId = $("#hidfRoleId").val();
+            var cbxs = $(".layui-form").find('input[type="checkbox"]');
+            var _list = [];
+            var role_id_str = "";
+            cbxs.each(function (index, item) {
+                if (item.checked == true) {
+                    //var _row = { MenuId: 0, ActionId: 0 };
+                    //_row.MenuId = _roleId;
+                    //_row.ActionId = item.value;
+                    //_list.push(_row);
+                    role_id_str+=item.value+","
+                }
+            });
+            layer.msg(role_id_str);
+            if (isStrNull(role_id_str) != "")
+            {
+                $.ajax({
+                    url: "/Permissions/Role/Update_Role_List",
+                    type: "POST",
+                    //data: { "list": _list, RoleId: _roleId },
+                    data: { "role_id_str": role_id_str, RoleId: _roleId },
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.state == "success") {
+                            common.msgSuccess("保存成功");
+                        } else {
+                            common.msgError("保存失败");
+                        }
+                        //setTimeout(CloseWin, 1500);
+                    }
+                });
+            }
+            
+        });
+    });
+</script>
