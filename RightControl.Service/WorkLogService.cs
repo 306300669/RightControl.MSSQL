@@ -28,7 +28,7 @@ namespace RightControl.Service
             {
                 _where += string.Format(" and {0}wk_title like '%@wk_title'", pageInfo.prefix);
             }
-            if (filter.CreateBy != 0)//发布人
+            if (filter.CreateBy != 0)//发布人 
             {
                 _where += string.Format(" and {0}CreateBy=@CreateBy", pageInfo.prefix);
             }
