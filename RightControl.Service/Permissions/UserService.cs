@@ -8,6 +8,7 @@ namespace RightControl.Service
     public class UserService : BaseService<UserModel>, IUserService
     {
         public IUserRepository repository { get; set; }
+        public IRoleRepository rolesitory { get; set; }
         public UserModel GetDetail(int Id)
         {
             return repository.GetDetail(Id);
@@ -53,12 +54,27 @@ namespace RightControl.Service
             {
                 _where += string.Format(" and {0}Status=@Status", pageInfo.prefix);
             }
+            RoleModel roleInfo=GetRoleModel(Operator);
+            if (roleInfo.Self)//如果是个人
+            {
+                _where += string.Format(" and {0}Id=-1", pageInfo.prefix);
+            }
+            if(!string.IsNullOrEmpty(roleInfo.Role_List))
+            {
+                _where += string.Format(" and {0}RoleId in({1})", pageInfo.prefix,roleInfo.Role_List);
+            }
             if (!string.IsNullOrEmpty(pageInfo.field))
             {
                 pageInfo.field = pageInfo.prefix + pageInfo.field;
             }
             pageInfo.returnFields = string.Format("{0}Id,{0}UserName,{0}RealName,{0}CreateOn,{0}PassWord,{0}Status,{0}RoleId,r.RoleName", pageInfo.prefix);
             return GetPageUnite(baseRepository, pageInfo, _where, filter);
+        }
+
+        public RoleModel GetRoleModel(OperatorModel Operator)
+        {
+            RoleModel info=rolesitory.Read(Operator.RoleId);
+            return info;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace RightControl.Service
     public class WorkLogService : BaseService<WorkLogModel>, IWorkLogService
     {
         public IWorkLogRepository repository { get; set; }
+        public IRoleRepository role_repository { get; set; }
 
         public WorkLogModel GetDetail(int Id)
         {
@@ -35,6 +36,11 @@ namespace RightControl.Service
             {
                 _where += string.Format(" and {0}wk_ReadStatus=@wk_ReadStatus", pageInfo.prefix);
             }
+            RoleModel roleInfo=GetRoleModel(Operator);
+            if(roleInfo.Self)
+            {
+                _where += string.Format(" and {0}CreateBy={1}", pageInfo.prefix,Operator.UserId);
+            }
             if (!string.IsNullOrEmpty(pageInfo.field))
             {
                 pageInfo.field = pageInfo.prefix + pageInfo.field;
@@ -43,5 +49,11 @@ namespace RightControl.Service
                                                     us.RealName", pageInfo.prefix);
             return GetPageUnite(baseRepository, pageInfo, _where, filter);
         }
+        public RoleModel GetRoleModel(OperatorModel Operator)
+        {
+            RoleModel info = role_repository.Read(Operator.RoleId);
+            return info;
+        }
+
     }
 }

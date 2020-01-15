@@ -27,13 +27,13 @@ namespace RightControl.Service
             }
             RoleModel roleModel= GetRoleModel(Operator);
 
-            if (!string.IsNullOrEmpty(roleModel.Role_List))
+            if (!string.IsNullOrEmpty(roleModel.Role_List))//角色范围
             {
                 _where += string.Format(" and Id in({0})", roleModel.Role_List);
             }
-            if(roleModel.Self)
+            if(roleModel.Self)//是否个人
             {
-                _where += string.Format(" and Id !={0}", Operator.UserId);
+                _where += string.Format(" and Id =-1");
             }
             return GetListByFilter(filter, pageInfo, _where);
         }

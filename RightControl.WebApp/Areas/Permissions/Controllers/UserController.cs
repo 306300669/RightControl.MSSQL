@@ -28,7 +28,7 @@ namespace RightControl.WebApp.Areas.Permissions.Controllers
         [HttpGet]
         public JsonResult List(UserModel filter, PageInfo pageInfo)
         {
-            var result = userService.GetListByFilter(filter, pageInfo,null);
+            var result = userService.GetListByFilter(filter, pageInfo,Operator);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Detail(int Id)

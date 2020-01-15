@@ -105,7 +105,7 @@ namespace RightControl.WebApp.Areas.Admin.Controllers
         [HttpGet]
         public JsonResult List(WorkLogModel filter, PageInfo pageInfo)
         {
-            var result = workLogService.GetListByFilter(filter, pageInfo,null);
+            var result = workLogService.GetListByFilter(filter, pageInfo,Operator);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
