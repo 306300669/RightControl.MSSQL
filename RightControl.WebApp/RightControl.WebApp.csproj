@@ -255,7 +255,8 @@
     <Content Include="Areas\Admin\Scripts\jquery-1.10.2.min.js" />
     <Content Include="Areas\Admin\Scripts\modernizr-2.6.2.js" />
     <Content Include="Icon.html" />
-    <Content Include="Upload\img\502.jpg" />
+    <Content Include="Upload\img\TIM图片20200115141229.png" />
+    <Content Include="Upload\img\TIM图片20200115141301.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
