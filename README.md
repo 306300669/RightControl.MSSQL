@@ -1,4 +1,4 @@
-# RightControl MSSQL 版本
+# RightControl MSSQL 个人修改版本
 
 #### 介绍
 .NET 通用后台角色权限管理系统，个人修改版。<br>
