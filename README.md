@@ -45,3 +45,5 @@
 #### 项目截图
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0620/133448_cd9a4888_1130037.jpeg "1.jpg")
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0620/133502_f04776ed_1130037.png "2.png")
+![输入图片说明](https://github.com/306300669/RightControl.MSSQL/blob/master/RightControl.WebApp/Upload/img/TIM%E5%9B%BE%E7%89%8720200115141301.png "2.png")
+![输入图片说明](https://github.com/306300669/RightControl.MSSQL/blob/master/RightControl.WebApp/Upload/img/TIM%E5%9B%BE%E7%89%8720200115141229.png "2.png")
