@@ -34,7 +34,7 @@ namespace RightControl.Service
             {
                 _where += string.Format(" and {0}CreateBy=@CreateBy", pageInfo.prefix);
             }
-            if (filter.wk_ReadStatus != 0)//阅读状态
+            if (filter.wk_ReadStatus != 0)//阅读状态 
             {
                 _where += string.Format(" and {0}wk_ReadStatus=@wk_ReadStatus", pageInfo.prefix);
             }
