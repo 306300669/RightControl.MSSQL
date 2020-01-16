@@ -450,7 +450,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form'], function(exports){
             res[response.dataName] = res.data;//.concat().splice(startLimit, options.limit);
             res[response.countName] = res.data.length;
 
-            console.log(res.data);
+            //console.log(res.data);
 
             that.renderData(res, curr, options.data.length), sort();
             typeof options.done === 'function' && options.done(res, curr, res[response.countName]);

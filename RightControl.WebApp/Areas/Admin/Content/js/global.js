@@ -65,7 +65,7 @@ function ajaxSubmitForm(form, func) {
             }
     },
     error:function(data){
-        console.log(data);
+        console.error(data);
     }
 });
 }

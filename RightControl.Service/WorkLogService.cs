@@ -14,6 +14,8 @@ namespace RightControl.Service
     {
         public IWorkLogRepository repository { get; set; }
         public IRoleRepository role_repository { get; set; }
+        public IUserRepository user_repository { get; set; }
+
 
         public WorkLogModel GetDetail(int Id)
         {
@@ -36,10 +38,15 @@ namespace RightControl.Service
             {
                 _where += string.Format(" and {0}wk_ReadStatus=@wk_ReadStatus", pageInfo.prefix);
             }
-            RoleModel roleInfo=GetRoleModel(Operator);
-            if(roleInfo.Self)
+            RoleModel roleInfo = GetRoleModel(Operator);
+            if (roleInfo.Self)
             {
-                _where += string.Format(" and {0}CreateBy={1}", pageInfo.prefix,Operator.UserId);
+                _where += string.Format(" and {0}CreateBy={1}", pageInfo.prefix, Operator.UserId);
+            }
+            string UserArea=GetUserIdStr(Operator);
+            if (!string.IsNullOrEmpty(UserArea))
+            {
+                _where += string.Format(" and {0}CreateBy in ({1})", pageInfo.prefix, UserArea);
             }
             if (!string.IsNullOrEmpty(pageInfo.field))
             {
@@ -53,6 +60,31 @@ namespace RightControl.Service
         {
             RoleModel info = role_repository.Read(Operator.RoleId);
             return info;
+        }
+        public string GetUserIdStr(OperatorModel Operator)
+        {
+            RoleModel info = GetRoleModel(Operator);
+            StringBuilder userStr = new StringBuilder();
+            if (!string.IsNullOrEmpty(info.Role_List))
+            {
+                string[] roleArr = info.Role_List.Split(',');
+                foreach (string item in roleArr)
+                {
+                    IEnumerable<UserModel> list = user_repository.GetByWhere(string.Format(" where RoleId={0}", item));
+                    if (list.Count() > 0)
+                    {
+                        foreach (UserModel itemInfo in list)
+                        {
+                            userStr.AppendFormat("{0},", itemInfo.Id);
+                        }
+                    }
+
+                }
+            }
+            string res = userStr.ToString();
+            if (!string.IsNullOrEmpty(res))
+                return res.Trim(',');
+            else return "";
         }
 
     }

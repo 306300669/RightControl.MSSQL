@@ -220,7 +220,7 @@ layui.define(['element', 'common'], function (exports) {
 	 * @param {Object} data
 	 */
     function getHtml(data) {
-        console.log(data);
+        //console.log("romanticcrystal",data);
         ulHtml = '<ul class="layui-nav layui-nav-tree beg-navbar">';
         for (var i = 0; i < data.length; i++) {
             if (data[i].spread) {

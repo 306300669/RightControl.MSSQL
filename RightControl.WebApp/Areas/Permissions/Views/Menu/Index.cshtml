@@ -78,7 +78,6 @@
                 var data = obj.data;
                 if (obj.event === 'del') {
                     layer.confirm('确定要删除吗', function (index) {
-                        console.log(data);
                         $.ajax({
                             url: "/Permissions/Menu/Delete",
                             type: "POST",
