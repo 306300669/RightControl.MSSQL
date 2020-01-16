@@ -41,9 +41,10 @@
 2. 角色添加是否个人字段、角色设置该角色可访问的角色范围
 3. 添加工作日志模块
 4. 之前官方下载的版本存在一个隐形bug（管理员为其他角色管理分配过菜单后，无法控制菜单显示，（已修复））
+5. 增加数据范围限制用户数据范围
 
 #### 项目截图
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0620/133448_cd9a4888_1130037.jpeg "1.jpg")
 ![输入图片说明](https://images.gitee.com/uploads/images/2019/0620/133502_f04776ed_1130037.png "2.png")
-![输入图片说明](https://github.com/306300669/RightControl.MSSQL/blob/master/RightControl.WebApp/Upload/img/TIM%E5%9B%BE%E7%89%8720200115141301.png "2.png")
-![输入图片说明](https://github.com/306300669/RightControl.MSSQL/blob/master/RightControl.WebApp/Upload/img/TIM%E5%9B%BE%E7%89%8720200115141229.png "2.png")
+![输入图片说明](https://github.com/306300669/RightControl.MSSQL/blob/master/RightControl.WebApp/Upload/img/20200115141301.png "2.png")
+![输入图片说明](https://github.com/306300669/RightControl.MSSQL/blob/master/RightControl.WebApp/Upload/img/20200115141229.png "2.png")
